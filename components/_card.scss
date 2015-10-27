@@ -1,27 +1,39 @@
-$card-margin: 8px !default;
 $card-padding: 16px !default;
-$card-box-shadow: $whiteframe-shadow-z1 !default;
+$card-box-shadow: $whiteframe-shadow-1dp !default;
 
 md-card {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  margin: $card-margin;
+  margin: $baseline-grid;
 
   box-shadow: $card-box-shadow;
 
   > img,
   > :not(md-card-content) img {
-    order: 0;
+    display: flex;
+    flex: 0 0 auto;
     width: 100%;
+    height: auto;
   }
 
   md-card-content {
-    order: 1;
+    display: block;
     padding: $card-padding;
   }
+
+  .md-actions {
+    margin: 0;
+
+    .md-button {
+      margin-bottom: $baseline-grid;
+      margin-top: $baseline-grid;
+      margin-right: $baseline-grid * .5;
+      margin-left: $baseline-grid * .5;
+    }
+  }
   md-card-footer {
-    order: 2;
+    margin-top: auto;
     padding: $card-padding;
   }
 }

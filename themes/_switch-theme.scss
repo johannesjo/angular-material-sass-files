@@ -1,4 +1,7 @@
 md-switch.md-THEME_NAME-theme {
+  .md-ink-ripple {
+    color: '{{background-500}}';
+  }
   .md-thumb {
     background-color: '{{background-50}}';
   }
@@ -7,28 +10,46 @@ md-switch.md-THEME_NAME-theme {
   }
 
   &.md-checked {
+    .md-ink-ripple {
+      color: '{{accent-color}}';
+    }
     .md-thumb {
       background-color: '{{accent-color}}';
     }
     .md-bar {
       background-color: '{{accent-color-0.5}}';
     }
+    &.md-focused .md-thumb:before {
+      background-color: '{{accent-color-0.26}}';
+    }
 
     &.md-primary {
+      .md-ink-ripple {
+        color: '{{primary-color}}';
+      }
       .md-thumb {
         background-color: '{{primary-color}}';
       }
       .md-bar {
         background-color: '{{primary-color-0.5}}';
       }
+      &.md-focused .md-thumb:before {
+        background-color: '{{primary-color-0.26}}';
+      }
     }
 
     &.md-warn {
+      .md-ink-ripple {
+        color: '{{warn-color}}';
+      }
       .md-thumb {
         background-color: '{{warn-color}}';
       }
       .md-bar {
         background-color: '{{warn-color-0.5}}';
+      }
+      &.md-focused .md-thumb:before {
+        background-color: '{{warn-color-0.26}}';
       }
     }
   }
@@ -41,12 +62,4 @@ md-switch.md-THEME_NAME-theme {
       background-color: '{{foreground-4}}';
     }
   }
-
-  &:focus {
-    .md-label:not(:empty) {
-      border-color: '{{foreground-1}}';
-      border-style: dotted;
-    }
-  }
-
 }

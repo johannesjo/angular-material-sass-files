@@ -54,6 +54,10 @@ md-slider {
   margin-right: 4px;
   padding: 0;
 
+  *, *:after {
+    box-sizing: border-box;
+  }
+
   .md-slider-wrapper {
     position: relative;
   }
@@ -81,6 +85,12 @@ md-slider {
     left: 0;
     right: 0;
     height: 100%;
+  }
+  .md-track-ticks canvas {
+    // Restrict the width of the canvas so that ticks are rendered correctly
+    // when parent elements are resized. Else, the position of the ticks might
+    // be incorrect as we only update the canvas width attribute on window resize.
+    width: 100%;
   }
 
   /**
@@ -111,7 +121,8 @@ md-slider {
       width: $slider-thumb-width;
       height: $slider-thumb-height;
       border-radius: max($slider-thumb-width, $slider-thumb-height);
-      border: 3px solid;
+      border-width: 3px;
+      border-style: solid;
     }
 
     transform: scale($slider-thumb-default-scale);
@@ -145,7 +156,8 @@ md-slider {
       top: 19px;
       border-left: $slider-arrow-width / 2 solid transparent;
       border-right: $slider-arrow-width / 2 solid transparent;
-      border-top: $slider-arrow-height solid;
+      border-top-width: $slider-arrow-height;
+      border-top-style: solid;
 
       opacity: 0;
       transform: translate3d(0,-8px,0);
@@ -171,10 +183,9 @@ md-slider {
   }
   .md-focus-ring {
     @include slider-thumb-position($slider-focus-thumb-width, $slider-focus-thumb-height);
-    border: 2px solid #D6D6D6;
-    background-color: transparent;
     transform: scale(0);
     transition: all 0.2s linear;
+    opacity: 0.26;
   }
   .md-disabled-thumb {
     @include slider-thumb-position(
@@ -182,7 +193,8 @@ md-slider {
       $slider-thumb-height + $slider-thumb-disabled-border * 2
     );
     transform: scale($slider-thumb-disabled-scale);
-    border: $slider-thumb-disabled-border solid;
+    border-width: $slider-thumb-disabled-border;
+    border-style: solid;
     display: none;
   }
 
@@ -202,7 +214,7 @@ md-slider {
   }
 
   /* Don't animate left/right while panning */
-  &.dragging {
+  &.md-dragging {
     .md-thumb-container,
     .md-track-fill {
       transition: none;
@@ -224,7 +236,7 @@ md-slider {
       }
 
       &:focus,
-      &.active {
+      &.md-active {
         .md-focus-thumb {
           display: block;
         }
@@ -247,7 +259,7 @@ md-slider {
 
     &:not([disabled]) {
       &:focus,
-      &.active {
+      &.md-active {
         .md-sign,
         .md-sign:after {
           opacity: 1;

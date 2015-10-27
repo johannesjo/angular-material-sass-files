@@ -2,7 +2,7 @@ $input-container-padding: 2px !default;
 
 $input-label-default-offset: 24px !default;
 $input-label-default-scale: 1.0 !default;
-$input-label-float-offset: 4px !default;
+$input-label-float-offset: 6px !default;
 $input-label-float-scale: 0.75 !default;
 
 $input-placeholder-offset: $input-label-default-offset !default;
@@ -15,21 +15,31 @@ $input-padding-top: 2px !default;
 $input-error-font-size: 12px !default;
 $input-error-height: 24px !default;
 
+$icon-offset : 36px !default;
+
+$icon-float-top: -16px !default;
+$icon-float-focused-top: -8px !default;
+
 md-input-container {
   display: flex;
   position: relative;
   flex-direction: column;
 
-  overflow-x: hidden;
   padding: $input-container-padding;
   padding-bottom: $input-container-padding + $input-error-height;
+
+  // When we have ng-messages, remove the input error height from our bottom padding, since the
+  // ng-messages wrapper has a min-height of 1 error (so we don't adjust height as often; see below)
+  &.md-input-has-messages {
+    padding-bottom: $input-container-padding;
+  }
 
   > md-icon {
     position: absolute;
     top: 5px;
     left: 2px;
     + input {
-      margin-left: 28px * 2;
+          margin-left: $icon-offset;
     }
   }
 
@@ -52,33 +62,50 @@ md-input-container {
     -moz-appearance: none;
     -webkit-appearance: none;
   }
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"] {
+    min-height: $input-line-height;
+  }
   textarea {
     resize: none;
     overflow: hidden;
   }
 
   textarea.md-input {
-    min-height: 2 * $input-line-height + $input-border-width-focused + $input-padding-top;
+    min-height: $input-line-height;
     -ms-flex-preferred-size: auto; //IE fix
   }
 
+  label {
+    position: relative;
+    top: -2px;
+  }
+
+
   label:not(.md-no-float),
-  .md-placeholder:not(.md-select-label) {
+  .md-placeholder {
     order: 1;
     pointer-events: none;
     -webkit-font-smoothing: antialiased;
     padding-left: $input-container-padding;
     z-index: 1;
-    transform: translate3d(0, $input-label-default-offset, 0) scale($input-label-default-scale);
-    transform-origin: left top;
+    transform: translate3d(0, $input-label-default-offset + 4, 0) scale($input-label-default-scale);
     transition: transform $swift-ease-out-timing-function 0.25s;
+
+    @include rtl(transform-origin, left top, right top);
   }
-  .md-placeholder:not(.md-select-label) {
+  .md-placeholder {
     position: absolute;
     top: 0;
     opacity: 0;
     transition-property: opacity, transform;
     transform: translate3d(0, $input-placeholder-offset + $baseline-grid * 0.75, 0);
+    &.md-static {
+      position: static;
+    }
   }
   &.md-input-focused .md-placeholder {
     opacity: 1;
@@ -90,18 +117,27 @@ md-input-container {
     opacity: 0;
   }
 
-  &:not( .md-input-has-value ) input:not( :focus ) {
-    color: transparent;
+  &:not( .md-input-has-value ) input:not( :focus ),
+  &:not( .md-input-has-value ) input:not( :focus )::-webkit-datetime-edit-ampm-field,
+  &:not( .md-input-has-value ) input:not( :focus )::-webkit-datetime-edit-day-field,
+  &:not( .md-input-has-value ) input:not( :focus )::-webkit-datetime-edit-hour-field,
+  &:not( .md-input-has-value ) input:not( :focus )::-webkit-datetime-edit-millisecond-field,
+  &:not( .md-input-has-value ) input:not( :focus )::-webkit-datetime-edit-minute-field,
+  &:not( .md-input-has-value ) input:not( :focus )::-webkit-datetime-edit-month-field,
+  &:not( .md-input-has-value ) input:not( :focus )::-webkit-datetime-edit-second-field,
+  &:not( .md-input-has-value ) input:not( :focus )::-webkit-datetime-edit-week-field,
+  &:not( .md-input-has-value ) input:not( :focus )::-webkit-datetime-edit-year-field,
+  &:not( .md-input-has-value ) input:not( :focus )::-webkit-datetime-edit-text {
+      color: transparent;
   }
-
 
   /*
    * The .md-input class is added to the input/textarea
    */
   .md-input {
-    flex: 1 1 auto;
     order: 2;
     display: block;
+    margin-top: 0;
 
     background: none;
     padding-top: $input-padding-top;
@@ -112,6 +148,10 @@ md-input-container {
     line-height: $input-line-height;
     -ms-flex-preferred-size: $input-line-height; //IE fix
     border-radius: 0;
+    border-style: solid; // Firefox fix
+
+    // Fix number inputs in Firefox to be full-width
+    width: auto;
 
     &:focus {
       outline: none;
@@ -120,55 +160,100 @@ md-input-container {
       outline: none;
       box-shadow: none;
     }
+
+    &.md-no-flex {
+      flex: none !important;
+    }
+  }
+
+  .md-char-counter {
+    position: absolute;
+    right: $input-container-padding;
+    bottom: 7px;
   }
 
   ng-messages, data-ng-messages, x-ng-messages,
   [ng-messages], [data-ng-messages], [x-ng-messages] {
-    order: 3;
     position: relative;
+    order: 4;
+    min-height: $input-error-height;
+
+    .md-char-counter {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: auto;
+    }
   }
+
   ng-message, data-ng-message, x-ng-message,
   [ng-message], [data-ng-message], [x-ng-message],
+  [ng-message-exp], [data-ng-message-exp], [x-ng-message-exp],
   .md-char-counter {
-    -webkit-font-smoothing: antialiased;
-    position: absolute;
+    $input-error-line-height: $input-error-font-size + 2px;
+    //-webkit-font-smoothing: antialiased;
     font-size: $input-error-font-size;
-    line-height: $input-error-height;
+    line-height: $input-error-line-height;
+    overflow: hidden;
+
+    // Add some top padding which is equal to half the difference between the expected height
+    // and the actual height
+    $error-padding-top: ($input-error-height - $input-error-line-height) / 2;
+    padding-top: $error-padding-top;
+
+    &:not(.md-char-counter) {
+      padding-right: rem(5);
+    }
 
     &.ng-enter {
-      transition: $swift-ease-out;
-      transition-delay: 0.2s;
+      transition: $swift-ease-in;
+
+      // Delay the enter transition so it happens after the leave
+      transition-delay: $swift-ease-in-duration / 1.5;
+
+      // Since we're delaying the transition, we speed up the duration a little bit to compensate
+      transition-duration: $swift-ease-in-duration / 1.5;
     }
     &.ng-leave {
-      transition: $swift-ease-in;
+      transition: $swift-ease-out;
+
+      // Speed up the duration (see enter comment above)
+      transition-duration: $swift-ease-out-duration / 1.5;
     }
     &.ng-enter,
     &.ng-leave.ng-leave-active {
+      // Move the error upwards off the screen and fade it out
+      margin-top: -$input-error-line-height - $error-padding-top;
       opacity: 0;
-      transform: translate3d(0, -20%, 0);
     }
     &.ng-leave,
     &.ng-enter.ng-enter-active {
+      // Move the error down into position and fade it in
+      margin-top: 0;
       opacity: 1;
-      transform: translate3d(0, 0, 0);
     }
-  }
-  .md-char-counter {
-    bottom: $input-container-padding;
-    right: $input-container-padding;
   }
 
   &.md-input-focused,
+  &.md-input-has-placeholder,
   &.md-input-has-value {
     label:not(.md-no-float) {
       transform: translate3d(0,$input-label-float-offset,0) scale($input-label-float-scale);
     }
   }
 
+  // If we have an existing value; don't animate the transform as it happens on page load and
+  // causes erratic/unnecessary animation
+  &.md-input-has-value {
+    label {
+      transition: none;
+    }
+  }
+
   // Use wide border in error state or in focused state
   &.md-input-focused .md-input,
   .md-input.ng-invalid.ng-dirty {
-    padding-bottom: 0px; // Increase border width by 1px, decrease padding by 1
+    padding-bottom: 0; // Increase border width by 1px, decrease padding by 1
     border-width: 0 0 $input-border-width-focused 0;
   }
 
@@ -178,8 +263,59 @@ md-input-container {
       background-position: 0 bottom;
       // This background-size is coordinated with a linear-gradient set in input-theme.scss
       // to create a dotted line under the input.
-      background-size: 3px 1px;
+      background-size: 4px 1px;
       background-repeat: repeat-x;
+      margin-bottom: -1px; // Shift downward so dotted line is positioned the same as other bottom borders
+    }
+  }
+}
+
+md-input-container.md-icon-float {
+
+  margin-top : $icon-float-top;
+  transition : margin-top 0.5s $swift-ease-out-timing-function ;
+
+
+  > label  {
+      pointer-events:none;
+      position:absolute;
+      margin-left: $icon-offset;
+  }
+
+  > md-icon {
+    top: 26px;
+    left: 2px;
+    + input,
+    + textarea {
+          margin-left: $icon-offset;
+    }
+  }
+
+  > input,
+  > textarea {
+    padding-top : $input-line-height - $input-container-padding;
+  }
+
+  &.md-input-focused,
+  &.md-input-has-value {
+
+    margin-top: $icon-float-focused-top;
+
+    label {
+        transform: translate3d(0,$input-label-float-offset,0) scale($input-label-float-scale);
+        transition: transform $swift-ease-out-timing-function 0.5s;
+      }
+  }
+
+}
+
+md-input-container.md-icon-right {
+  input {
+    margin-right: $icon-offset;
+    + md-icon {
+      top: 26px;
+      right: 2px;
+      margin-right: 0;
     }
   }
 }
