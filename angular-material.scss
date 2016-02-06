@@ -1,4 +1,9 @@
+@import "./_mixins.scss";
+@import "./_variables.scss";
 @import "./_style.scss";
+@import "./components/_layout.scss";
+@import "./components/_calendar.scss";
+@import "./components/_layout.print.scss";
 @import "./components/_card.scss";
 @import "./components/_icon.scss";
 @import "./components/_datePicker.scss";
@@ -9,21 +14,17 @@
 @import "./components/_progress-linear.scss";
 @import "./components/_progress-circular.scss";
 @import "./components/_radio-button.scss";
-@import "./components/_calendar.scss";
 @import "./components/_whiteframe.scss";
 @import "./components/_bottom-sheet.scss";
 @import "./components/_input.scss";
 @import "./components/_sidenav.scss";
 @import "./components/_grid-list.scss";
 @import "./components/_virtual-repeater.scss";
-@import "./components/_standalone.scss";
 @import "./components/_switch.scss";
-@import "./components/_layout.attributes.scss";
 @import "./components/_content.scss";
 @import "./components/_button.scss";
 @import "./components/_menu-bar.scss";
 @import "./components/_backdrop.scss";
-@import "./components/_layout.scss";
 @import "./components/_divider.scss";
 @import "./components/_typography.scss";
 @import "./components/_fabSpeedDial.scss";
@@ -33,13 +34,13 @@
 @import "./components/_slider.scss";
 @import "./components/_chips.scss";
 @import "./components/_toast.scss";
+@import "./components/_layout-attributes.scss";
 @import "./components/_list.scss";
 @import "./components/_dialog.scss";
 @import "./components/_sticky.scss";
 @import "./components/_tooltip.scss";
 @import "./components/_select.scss";
 @import "./components/_fabToolbar.scss";
-@import "./_variables.scss";
 @import "./themes/_button-theme.scss";
 @import "./themes/_chips-theme.scss";
 @import "./themes/_content-theme.scss";
@@ -69,5 +70,4 @@
 @import "./themes/_card-theme.scss";
 @import "./themes/_switch-theme.scss";
 @import "./themes/_tooltip-theme.scss";
-@import "./_mixins.scss";
-@import "./angular-material.scss";
+

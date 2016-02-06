@@ -1,7 +1,7 @@
 {
   "name": "angular-material-sass-files",
   "description": "The sass files of the angular-material repository",
-  "version": "1.0.0-rc1",
+  "version": "1.0.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/johannesjo/angular-material-sass-files.git"
