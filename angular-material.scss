@@ -1,9 +1,6 @@
-@import "./_mixins.scss";
 @import "./_variables.scss";
+@import "./_mixins.scss";
 @import "./_style.scss";
-@import "./components/_layout.scss";
-@import "./components/_calendar.scss";
-@import "./components/_layout.print.scss";
 @import "./components/_card.scss";
 @import "./components/_icon.scss";
 @import "./components/_datePicker.scss";
@@ -14,21 +11,26 @@
 @import "./components/_progress-linear.scss";
 @import "./components/_progress-circular.scss";
 @import "./components/_radio-button.scss";
+@import "./components/_calendar.scss";
 @import "./components/_whiteframe.scss";
 @import "./components/_bottom-sheet.scss";
 @import "./components/_input.scss";
 @import "./components/_sidenav.scss";
 @import "./components/_grid-list.scss";
+@import "./components/_navBar.scss";
 @import "./components/_virtual-repeater.scss";
 @import "./components/_switch.scss";
 @import "./components/_content.scss";
 @import "./components/_button.scss";
 @import "./components/_menu-bar.scss";
 @import "./components/_backdrop.scss";
+@import "./components/_layout.scss";
 @import "./components/_divider.scss";
+@import "./components/_truncate.scss";
 @import "./components/_typography.scss";
 @import "./components/_fabSpeedDial.scss";
 @import "./components/_autocomplete.scss";
+@import "./components/_panel.scss";
 @import "./components/_subheader.scss";
 @import "./components/_structure.scss";
 @import "./components/_slider.scss";
@@ -49,6 +51,7 @@
 @import "./themes/_checkbox-theme.scss";
 @import "./themes/_slider-theme.scss";
 @import "./themes/_tabs-theme.scss";
+@import "./themes/_navBar-theme.scss";
 @import "./themes/_menu-bar-theme.scss";
 @import "./themes/_progress-linear-theme.scss";
 @import "./themes/_backdrop-theme.scss";
@@ -58,11 +61,13 @@
 @import "./themes/_autocomplete-theme.scss";
 @import "./themes/_sidenav-theme.scss";
 @import "./themes/_subheader-theme.scss";
+@import "./themes/_panel-theme.scss";
 @import "./themes/_datePicker-theme.scss";
 @import "./themes/_input-theme.scss";
 @import "./themes/_select-theme.scss";
 @import "./themes/_list-theme.scss";
 @import "./themes/_menu-theme.scss";
+@import "./themes/_core-theme.scss";
 @import "./themes/_divider-theme.scss";
 @import "./themes/_dialog-theme.scss";
 @import "./themes/_toast-theme.scss";
@@ -70,4 +75,3 @@
 @import "./themes/_card-theme.scss";
 @import "./themes/_switch-theme.scss";
 @import "./themes/_tooltip-theme.scss";
-
